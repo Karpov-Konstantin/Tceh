@@ -1,0 +1,32 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        Сообщения:
+            {% for category, message in messages %}
+                Категория: {{ category }}
+                Сообщение: {{ message }}
+            {% endfor %}
+        Конец сообщений
+    {% endif %}
+{% endwith %}
+
+{% if posts %}
+    Посты в блоге:
+    {% for item in posts %}
+        Заголовок: {{ item.title }}
+        Автор: {{ item.user.email }}/{{ item.user.username }}/{{ item.user_id }}
+        Дата: {{ item.date_created }}
+        Текст: {{ item.content }}
+    {% endfor %}
+    Конец постов
+{% endif %}
+
+
+{% if comments %}
+    Комментарии в блоге:
+    {% for item in comments %}
+        Автор: {{ item.user.email }}/{{ item.user.username }}/{{ item.user_id }}
+        Пост: {{ item.post.content }}/ {{item.comment.id}}
+        Комментарий: {{ item.content }}
+    {% endfor %}
+    Конец комментариев
+{% endif %}
