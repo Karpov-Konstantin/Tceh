@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if posts %}  <!-- Выводим посты по 1  -->
+        {% for item in posts %}
+        <ul>
+        <div class="container">
+            <div class="row">
+                <div class="card" style="width: 28rem;">
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.title }} </h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Автор: {{ item.user.email }}/{{ item.user.username }}/{{ item.user_id }}</h6>
+                        <p class="card-text">{{ item.content }}</p>
+                     </div>
+                 </div>
+             </div> <!-- /row -->
+        </div>
+
+        {% if comments %} <!-- выводим коменты списком -->
+            {% for com in comments %}
+                {% if com.post_id == item.id %}
+                    <li style="margin-left:200px; margin-top: 10px ">
+                        <div class="container">
+                            <div class="row">
+
+                                <div class="card" style="width: 28rem;">
+                                    <div class="card-body">
+                                        <h6 class="card-subtitle mb-2 text-muted">Автор: {{ com.user.email }}/{{ com.user.username }}/{{ com.user_id }}</h6>
+                                        <p class="card-text">{{ com.content }}</p>
+                                    </div>
+                                </div>
+
+                            </div> <!-- /row -->
+                        </div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        </ul>
+        <br>
+        {% endfor %}
+    {% endif %}
+
+
+    <form action="" method="post" novalidate>
+        <p>
+           User_id   {{ form.user_id }}<br>
+            {% for error in form.user_id.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+           Post_id {{ form.post_id }}<br>
+            {% for error in form.post_id.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <p>
+            Content {{ form.content}}<br>
+            {% for error in form.content.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            <p>{{ form.submit() }}</p>
+
+        </p>
+
+    </form>
+
+
+
+
+
+        </div> <!-- /row -->
+    </div>
+
+{% endblock %}
